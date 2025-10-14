@@ -11,6 +11,8 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Made_with-Rust-orange?logo=rust" alt="Made with Rust">
+  <img src="https://img.shields.io/badge/license-MIT-green" alt="License: MIT">
+  <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"></a>
 </p>
 
 ---
