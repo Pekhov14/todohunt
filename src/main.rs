@@ -1,84 +1,30 @@
-use std::{fs, process};
-use std::fs::File;
-use std::io::{BufRead, Read, Write};
-use std::path::Path;
-use std::env;
+mod commands;
+use commands::*;
+
+use std::{env, process};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let config_file = "todohunt.toml";
-
-    if Path::new(config_file).exists() {
-        // read config
-        println!("Config file already exists: {}", config_file);
-    } else {
-        create_default_config()?;
-        println!("Creating config file: {}", config_file);
-    }
-
     let args = env::args().collect::<Vec<String>>();
 
     if args.len() < 2 {
-        display_help();
+        println!("There is no such command. To see all commands, enter:\
+         todohunt help ");
         process::exit(0);
     }
 
     let command = &args[1];
 
-    dbg!(command);
+    let exit_code = match command.as_str() {
+        "scan" => ScanCommand::new().handle(),
+        "sync" => SyncCommand::new().handle(),
+        "init" => InitCommand::new().handle(),
+        "info" => InfoCommand::new().handle(),
+        "list" => ListCommand::new().handle(),
+        _ => {
+            eprint!("\x1b[31m {} \x1b[0m is not a valid provided command", command);
+            1
+        }
+    };
 
-    match command.as_str() {
-        "scan" => {
-            println!("Scanning project");
-            // todo: read souses folders like a /src or ./
-            // go by files maybe recursive or with iterators
-            // search in file 'todo', 'TODO' maybe with regex
-            // save to cache path to file, line where searched todo, date time file changed
-        },
-        "init" => {
-            println!("Initializing...");
-            create_default_config()?;
-        },
-        "info" => display_help(),
-        _ => { eprint!("{} is not a valid provided command", command); process::exit(1); }
-    }
-
-
-    Ok(())
-}
-
-fn create_default_config() -> Result<(), Box<dyn std::error::Error>> {
-    let mut config_file = File::create("todohunt.toml")?;
-
-    let config_content = r#"[general]
-ignore = ["vendor", "node_modules", ".idea", ".vscode"]
-ignore_file_types = [".env"]
-work_dir = ["src"] # ./
-
-[provider]
-name = "github"
-token = "${GITHUB_TOKEN}"
-replace_todo = false
-add_issue_number = true
-add_issue_link = true
-
-[export]
-format = "markdown" # json
-output = "todohunt.md"
-open_links_in = "vscode" # idea
-"#;
-
-    config_file.write_all(config_content.as_bytes())?;
-    Ok(())
-}
-
-fn display_help() -> () {
-    println!("\n🦀 todohunt — hunting for TODOs\n");
-    println!("\nUsage: todohunt [COMMAND] [OPTIONS]\n");
-    println!("Commands:");
-    println!("  scan    Scan for TODOs in the project");
-    println!("  init    Create default config file");
-    println!("  help    Show this help message\n");
-    println!("Examples:");
-    println!("  todohunt scan    # Scan project for TODOs");
-    println!("  todohunt init    # Create config file");
+    process::exit(exit_code);
 }
