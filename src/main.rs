@@ -27,8 +27,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     dbg!(command);
 
     match command.as_str() {
-        "scan" => { println!("Scanning project"); },
-        "init" => { println!("Initializing..."); },
+        "scan" => {
+            println!("Scanning project");
+            // todo: read souses folders like a /src or ./
+            // go by files maybe recursive or with iterators
+            // search in file 'todo', 'TODO' maybe with regex
+            // save to cache path to file, line where searched todo, date time file changed
+        },
+        "init" => {
+            println!("Initializing...");
+            create_default_config()?;
+        },
         "info" => display_help(),
         _ => { eprint!("{} is not a valid provided command", command); process::exit(1); }
     }
