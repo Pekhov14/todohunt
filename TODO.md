@@ -1,0 +1,5 @@
+- [ ] Scan all todos in project
+- [ ] Add issues
+- [ ] Add config file for todohunt
+- [ ] Add cache for scanning
+- [ ] Write all todos to TODO.md or todo.json
