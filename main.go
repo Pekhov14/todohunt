@@ -1,9 +1,7 @@
 package main
 
-import (
-	"fmt"
-)
+import "todohunt/cmd"
 
 func main() {
-	fmt.Println("Todohunt")
+	cmd.Execute()
 }
