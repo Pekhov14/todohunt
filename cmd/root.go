@@ -9,13 +9,12 @@ import (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "todohunt",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
+	Short: "Scan your project for TODO comments",
+	Long: `Todohunt is a lightweight CLI that helps you find TODO comments
+across your project and keep track of unfinished work.
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Use it from the root of your repository to quickly inspect the codebase
+and surface tasks, notes, and technical debt markers before they get lost.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
