@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"fmt"
+	"todohunt/internal/scanner"
 
 	"github.com/spf13/cobra"
 )
@@ -15,8 +15,9 @@ for TODO comments in your source files.
 
 Use it when you want to collect pending tasks, review technical debt,
 or quickly see what still needs attention in the repository.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("scan called")
+	RunE: func(cmd *cobra.Command, args []string) error {
+		s := scanner.NewScanner()
+		return s.Scan()
 	},
 }
 

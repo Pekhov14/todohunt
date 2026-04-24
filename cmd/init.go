@@ -19,17 +19,17 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("init called")
+
+		err := os.Mkdir(".todohunt", 0755)
+		if err != nil {
+			fmt.Println("Error creating .todohunt directory")
+			os.Exit(1)
+		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(initCmd)
-
-	err := os.Mkdir(".todohunt", 0755)
-	if err != nil {
-		fmt.Println("Error creating .todohunt directory")
-		os.Exit(1)
-	}
 
 	// Here you will define your flags and configuration settings.
 
